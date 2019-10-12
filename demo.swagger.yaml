@@ -4,8 +4,8 @@ swagger: '2.0'
 #   version: v1
 #   description: APIs
 schemes:
-  - http
   - https
+  - http
 host: localhost
 basePath: /sample
 tags:

@@ -4,6 +4,7 @@ require_once "libraries/Flight/Flight.php";
 
 require_once "commons/configures.php";
 require_once "commons/auth.php";
+require_once "apis/signing.routes.php";
 require_once "apis/demo.routes.php";
 
 Flight::route("*", function()

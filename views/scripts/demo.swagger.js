@@ -2,7 +2,7 @@ jQuery(document).ready(function($)
 {
 	SwaggerUIBundle(
 	{
-		url: BASE_URL + "/Demo.Swagger.yaml",
+		url: `${BASE_URL}/Demo.Swagger.yaml`,
 		dom_id: "#swagger-ui",
 	});
 
