@@ -4,7 +4,7 @@ $HOST_NAME = $_SERVER["SERVER_NAME"];
 $PORT_NUM  = $_SERVER["SERVER_PORT"];
 $PROTOCOL  = $_SERVER["REQUEST_SCHEME"];
 
-$SUB_PATH  = "/sample";
+$SUB_PATH  = "/sample-v2";
 $HOST_URL  = sprintf("%s://%s", $PROTOCOL, $HOST_NAME);
 $BASE_URL  = sprintf("%s%s", $HOST_URL, $SUB_PATH == "/" ? "" : $SUB_PATH);
 
