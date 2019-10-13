@@ -7,7 +7,7 @@ RewriteRule ^(.*)$ index.php [QSA,L]
 
 Options All -Indexes
 
-# Required `od_deflate` and `mod_filter`
+# Required `mod_deflate` and `mod_filter`
 
 <IfModule mod_deflate.c>
 	AddOutputFilterByType DEFLATE text/html
