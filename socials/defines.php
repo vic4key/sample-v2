@@ -8,7 +8,7 @@
 # Facebook
 # 	https://developers.facebook.com/apps/
 # 	App Domains => domain.ext	Eg. localhost
-# 	Site URL => https://domain.ext/app	Eg. https://localhost/sample/
+# 	Site URL => https://domain.ext/app	Eg. https://localhost/sample-v2/
 #
 # Google
 # 	https://console.developers.google.com/apis/credentials

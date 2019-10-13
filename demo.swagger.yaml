@@ -7,7 +7,7 @@ schemes:
   - https
   - http
 host: localhost
-basePath: /sample
+basePath: /sample-v2
 tags:
   - name: Users
 # securityDefinitions:
