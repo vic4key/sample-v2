@@ -3,9 +3,9 @@ swagger: '2.0'
 #   title: Sample
 #   version: v1
 #   description: APIs
-schemes:
-  - https
-  - http
+# schemes:
+#   - https
+#   - http
 host: localhost
 basePath: /sample-v2
 tags:
