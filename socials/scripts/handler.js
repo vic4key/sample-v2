@@ -5,11 +5,11 @@ jQuery(document).ready(function($)
 	 */
 	$("#md_signio").on("show.bs.modal", function(e)
 	{
-		fnTabHandler($("#md_signio * li.active a").attr("href"), true);
+		handle_signing_tab($("#md_signio * li.active a").attr("href"), true);
 	})
 	.find("a[data-toggle=\"tab\"]").on("shown.bs.tab", function(e)
 	{
-		fnTabHandler($(e.target).attr("href"), true);
+		handle_signing_tab($(e.target).attr("href"), true);
 	});
 
 	/**
@@ -29,11 +29,11 @@ jQuery(document).ready(function($)
 		e.preventDefault();
 
 		var jdata = {
-			"name": $(this).find("input[name=user_name]").val(),
-			"pass": $(this).find("input[name=user_pass]").val(),
+			"user": $(this).find("input[name=frm_signin_user]").val(),
+			"pass": $(this).find("input[name=frm_signin_pass]").val(),
 		};
 
-		fnRequestSignIn("Basic", jdata);
+		request_signin("Basic", jdata);
 	});
 
 	/**
@@ -42,19 +42,6 @@ jQuery(document).ready(function($)
 	$("#frm_signout").submit(function(e)
 	{
 		e.preventDefault();
-		$.ajax(
-		{
-			url: `${BASE_URL}/signout`,
-			type: "DELETE",
-		})
-		.done(function(data, textStatus, jqXHR)
-		{
-			fnMessage("#msg_signout", eType.SUCCESS, data.message);
-			fnTabHandler($("#md_signio * li.active a").attr("href"));
-		})
-		.fail(function(jqXHR, textStatus, errorThrown)
-		{
-			fnMessage("#msg_signout", eType.FAILURE, `Sign-out failed '${jqXHR.statusText}'`);
-		});
+		request_signout();
 	});
 });

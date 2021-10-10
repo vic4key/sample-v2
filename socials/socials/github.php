@@ -26,6 +26,9 @@ class GitHub extends \IOSocial\Basic
 			return null;
 		}
 
+		# curl https://api.github.com/user -H "Authorization: <token_type> <access_token>"
+		# Eg. curl https://api.github.com/user -H "Authorization: bearer gho_..."
+
 		$me = cURL(
 			"GET",
 			"https://api.github.com/user",
@@ -52,7 +55,7 @@ class GitHub extends \IOSocial\Basic
 		    $me->last_name  = $parts[$nparts - 1];
 		}
 
-		$user = $this->User($me->email, $me->user, $me->first_name, $me->last_name);
+		$user = $this->User($me->email, $me->login, $me->first_name, $me->last_name);
 
 		return a2j($user);
 	}

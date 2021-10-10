@@ -22,7 +22,9 @@ namespace IOSocial;
 
 $GLOBALS["socials"] = array
 (
-	"Facebook" => array
+	"enabled" => True,
+
+	"Facebook"	=> array
 	(
 		"app_id"				=> "",
 		"app_secret"		=> "",

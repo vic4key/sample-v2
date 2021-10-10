@@ -12,7 +12,7 @@
 	    	$("#social-google-signin")[0], {},
 	        function(user)
 	        {
-	        	fnRequestSignIn("Google", user.Zi);
+	        	request_signin("Google", user.Zi);
 	        },
 	        function(error)
 	        {

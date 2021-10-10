@@ -6,7 +6,6 @@
 	LazyLoadScript("libraries/Swagger-UI-3.23.8/swagger-ui-bundle.js");
 	LazyLoadScript("libraries/Swagger-UI-3.23.8/swagger-ui-standalone-preset.js");
 
-	LazyLoadScript("views/scripts/demo.sign.io.js");
 	LazyLoadScript("views/scripts/demo.swagger.js");
 ?>
 

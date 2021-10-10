@@ -5,7 +5,7 @@ const eType =
 	FAILURE: 2,
 };
 
-function fnMessage(element, type, message)
+function set_message(element, type, message)
 {
 	var addClass = "alert-default";
 
@@ -27,19 +27,19 @@ function fnMessage(element, type, message)
 	.find("p").text(message);
 };
 
-function fnTabHandler(tabid, hidemsg = false)
+function handle_signing_tab(tabid, hidemsg = false)
 {
 	if (hidemsg)
 	{
-		fnMessage(tabid, eType.DEFAULT, "");
+		set_message(tabid, eType.DEFAULT, "");
 		$(tabid).find(".alert").hide();
 	}
 
-	var user = fnGetCurrentUser();
-	var signedin = user != null;
+	var juser = get_current_user();
+	var signed_in = juser != null;
 
 	var social_buttons = $("#social-buttons");
-	if (signedin)
+	if (signed_in)
 	{
 		social_buttons.hide();
 	}
@@ -54,12 +54,12 @@ function fnTabHandler(tabid, hidemsg = false)
 		{
 			$("#frm_signin")
 			.find("input")
-			.attr("disabled", signedin);
+			.attr("disabled", signed_in);
 
 			$("#frm_signin")
 			.find("button[type=submit]")
-			.attr("disabled", signedin)
-			.text(signedin ? `Signed In as [${user.first_name} ${user.last_name}]` : `Sign In`);
+			.attr("disabled", signed_in)
+			.text(signed_in ? `Signed In as ${juser.type} [${juser.first_name} ${juser.last_name}]` : `Sign In`);
 		}
 		break;
 
@@ -67,8 +67,8 @@ function fnTabHandler(tabid, hidemsg = false)
 		{
 			$("#frm_signout")
 			.find("button[type=submit]")
-			.attr("disabled", !signedin)
-			.text("Sign Out" + (!signedin ? "" : ` [${user.first_name} ${user.last_name}]`));
+			.attr("disabled", !signed_in)
+			.text("Sign Out" + (!signed_in ? "" : ` ${juser.type} [${juser.first_name} ${juser.last_name}]`));
 		}
 		break;
 
@@ -77,7 +77,7 @@ function fnTabHandler(tabid, hidemsg = false)
 	}
 }
 
-function fnGetCurrentUser()
+function get_current_user()
 {
 	var response = $.ajax(
 	{
@@ -91,47 +91,62 @@ function fnGetCurrentUser()
 		return null;
 	}
 
-	return response.responseJSON;
+	if (!response.responseJSON.hasOwnProperty("data"))
+	{
+		return null;
+	}
+
+	return response.responseJSON.data;
 }
 
-function fnRequestSignUp()
+function request_signup()
 {
 	$.ajax(
 	{
-		url: `${BASE_URL}/signup`,
+		url: `${BASE_URL}/users/signup`,
 		type: "POST",
 	});
 }
 
-function fnRequestSignIn(social, jdata)
+function request_signin(social, juser)
 {
 	$.ajax(
 	{
-		url: `${BASE_URL}/signin`,
+		url: `${BASE_URL}/users/signin`,
 		type: "POST",
 		dataType: "json",
 		data:
 		{
 			"social": social,
-			"data": jdata,
+			"data": juser,
 		}
 	})
 	.done(function (data, textStatus, jqXHR)
 	{
-		fnMessage("#msg_signin", data.hasOwnProperty("user") ? eType.SUCCESS : eType.FAILURE, data.message);
-		fnTabHandler($("#md_signio * li.active a").attr("href"));
+		set_message("#msg_signin", data.hasOwnProperty("user") ? eType.SUCCESS : eType.FAILURE, data.message);
+		handle_signing_tab($("#md_signio * li.active a").attr("href"));
 	})
 	.fail(function (jqXHR, textStatus, errorThrown)
 	{
-		fnMessage("#msg_signin", eType.FAILURE, `Sign-in failed '${jqXHR.statusText}'`);
+		set_message("#msg_signin", eType.FAILURE, `Sign-in failed '${jqXHR.statusText}'`);
 	});
 }
 
-function fnRequestSignOut()
+function request_signout()
 {
 	$.ajax(
 	{
-		url: `${BASE_URL}/signout`,
-		type: "DELETE",
+		url: `${BASE_URL}/users/signout`,
+		type: "POST",
+	})
+	.done(function(data, textStatus, jqXHR)
+	{
+		set_message("#msg_signout", eType.SUCCESS, data.message);
+		handle_signing_tab($("#md_signio * li.active a").attr("href"));
+		window.location.reload();
+	})
+	.fail(function(jqXHR, textStatus, errorThrown)
+	{
+		set_message("#msg_signout", eType.FAILURE, `Sign-out failed '${jqXHR.statusText}'`);
 	});
 }

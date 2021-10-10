@@ -1,3 +1,35 @@
+<?php
+	LazyLoadScript("socials/scripts/helper.js");
+	LazyLoadScript("socials/scripts/handler.js");
+?>
+
+<?php
+	if ($GLOBALS["socials"]["enabled"])
+	{
+		LazyLoadScript("socials/scripts/facebook.js");
+
+		LazyLoadScript("https://apis.google.com/js/api:client.js");
+		LazyLoadScript("socials/scripts/google.js");
+
+		LazyLoadScript("https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js");
+		LazyLoadScript("socials/scripts/github.js");
+
+		LazyLoadStyle("libraries/Bootstrap-Social/bootstrap-social.css");
+		LazyLoadStyle("socials/styles/style.css");
+	}
+?>
+
+<?php
+	if ($GLOBALS["socials"]["enabled"])
+	{
+		echo "<script type=\"text/javascript\">";
+		echo "const OAUTH_PUBLIC_KEY = \"{$socials["OAuth"]["public_key"]}\";";
+		echo "const SOCIAL_FACEBOOK_APP_ID  = \"{$socials["Facebook"]["app_id"]}\";";
+		echo "const SOCIAL_GOOGLE_CLIENT_ID = \"{$socials["Google"]["client_id"]}\";";
+		echo "</script>";
+	}
+?>
+
 		<div id="md_signio" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
@@ -41,7 +73,32 @@
 
 									<button type="submit" class="btn btn-primary btn-block">Sign In</button>
 
-									<?php include_once("socials/htmls/social.buttons.php"); ?>
+									<?php if ($GLOBALS["socials"]["enabled"]) { ?>
+									<div id="social-buttons">
+										<div class="social-button">
+											<span>OR</span>
+										</div>
+
+										<div class="social-button">
+											<a id="social-facebook-signin" class="btn btn-block btn-social btn-facebook">
+												<span class="fa fa-facebook"></span>Sign in with Facebook
+											</a>
+										</div>
+
+										<div class="social-button">
+											<meta name="google-signin-client_id" content="<?php echo "{$socials["Google"]["client_id"]}" ?>">
+											<a id="social-google-signin" class="btn btn-block btn-social btn-google">
+												<span class="fa fa-google"></span>Sign in with Google
+											</a>
+										</div>
+
+										<div class="social-button">
+											<a id="social-github-signin" class="btn btn-block btn-social btn-github">
+												<span class="fa fa-github"></span>Sign in with GitHub
+											</a>
+										</div>
+									</div>
+									<?php } ?>
 								</form>
 							</div>
 							<div class="modal-footer">

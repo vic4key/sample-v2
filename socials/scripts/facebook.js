@@ -19,7 +19,7 @@ window.fbAsyncInit = function ()
 
 	FB.getLoginStatus(function (response)
 	{
-		var user = fnGetCurrentUser();
+		var user = get_current_user();
 		if (user != null)
 		{
 			console.log(`Signed In as ${user.type}`);
@@ -30,7 +30,7 @@ window.fbAsyncInit = function ()
 		}
 		else
 		{
-			fnRequestSignOut();
+			request_signout();
 		}
 	});
 };
@@ -41,7 +41,7 @@ $("#social-facebook-signin").click(function(e)
 	{
 		if (response.status === "connected")
 		{
-			fnRequestSignIn("Facebook", response.authResponse);
+			request_signin("Facebook", response.authResponse);
 		}
 		else
 		{
@@ -49,7 +49,7 @@ $("#social-facebook-signin").click(function(e)
 			{
 				if (response.status === "connected")
 				{
-					fnRequestSignIn("Facebook", response.authResponse);
+					request_signin("Facebook", response.authResponse);
 				}
 				else
 				{
