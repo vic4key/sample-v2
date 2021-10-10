@@ -65,11 +65,16 @@ class Social implements \IOSocial\ISocial
 		$this->m_name = $name;
 	}
 
+	public function Basic()
+	{
+		return strlen($this->m_name) == 0 or $this->m_name == "Basic";
+	}
+
 	public function User($email, $user_name, $first_name, $last_name)
 	{
 		$user = new User;
 
-		$user->type       = "{$this->m_name} User";
+		$user->type       = $this->m_name;
 		$user->email      = $email;
 		$user->user       = $user_name;
 		$user->first_name = $first_name;

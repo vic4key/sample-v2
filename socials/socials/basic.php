@@ -49,6 +49,11 @@ class Basic extends \IOSocial\Social
 
 	public function Query($jdata)
 	{
+		if (!$this->Basic()) # only accept `Basic` or alias `<empty>`
+		{
+			return null;
+		}
+
 		if ($jdata == null)
 		{
 			return null;

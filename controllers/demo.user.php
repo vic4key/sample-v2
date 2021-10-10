@@ -63,10 +63,31 @@ class Users
 		\Flight::json($result);
 	}
 
-	public function Signup()
+	public function Signup($jdata = null)
 	{
-		$data = \Flight::request()->getBody();
-		echo "Sign Up <$data>";
+		if ($jdata == null) # Basic
+		{
+			$jdata = \Flight::request()->getBody();
+		}
+
+		$sql  = "INSERT INTO `tbl_user`";
+		$sql .= " ";
+		$sql .= "(`id`, `social`, `user`, `pass`, `email`, `first_name`, `last_name`, `age`)";
+		$sql .= " ";
+		$sql .= "VALUES (NULL, '$jdata->type', '$jdata->user', '', '$jdata->email', '$jdata->first_name', '$jdata->last_name', NULL)";
+
+		$ret = \Flight::db()->query($sql);
+
+		if ($jdata == null) # Basic
+		{
+			$result = array();
+			$result["message"] = $ret ? "Signed-in Successfully" : "Incorrect sign-in information";
+			\Flight::json($result);
+		}
+		else
+		{
+			return $ret;
+		}
 	}
 
 	public function Signin($name = null, $pass = null)
@@ -86,11 +107,24 @@ class Users
 		$jdata  = a2j($data);
 
 		$signer = \IOSocial\Socials::Instance()->Create($social);
-		$juser = $signer->Query($jdata);
+		$juser  = $signer->Query($jdata);
 
-		if ($juser == null)
+		if ($juser == null) # incorrect or unregistered
 		{
 			return \Flight::json($result);
+		}
+		else if (!$signer->Basic()) # sign-in by social id
+		{
+			$sql = \Models\User::serialize();
+			$sql = "SELECT {$sql} FROM `tbl_user` WHERE `email` = \"$juser->email\" LIMIT 1";
+
+			$users = \Flight::db()->query($sql)->fetchAll(\PDO::FETCH_CLASS, "Models\\User");
+
+			if (count($users) == 0) # unregistered
+			{
+				$ret = $this->Signup($juser); # sign-up it as a new account
+				$result["message-2nd"] = $ret ? "Signed-up Successfully" : "Signed-up Failed";
+			}
 		}
 
 		$result["user"] = $juser;
