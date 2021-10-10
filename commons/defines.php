@@ -48,7 +48,7 @@ $GLOBALS = array_merge($GLOBALS, array
     "prot" => $PROTOCOL,
     "root" => $HOST_URL,
     "base" => $BASE_URL,
-		"cage"		=> 3*60,
+		"cage"		=> 5*60, # minutes
   ),
   "views" => array
   (
