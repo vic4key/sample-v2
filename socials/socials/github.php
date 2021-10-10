@@ -27,7 +27,7 @@ class GitHub extends \IOSocial\Basic
 		}
 
 		# curl https://api.github.com/user -H "Authorization: <token_type> <access_token>"
-		# Eg. curl https://api.github.com/user -H "Authorization: bearer gho_..."
+		# curl https://api.github.com/user -H "Authorization: Bearer gho_..."
 
 		$me = cURL(
 			"GET",
@@ -39,20 +39,20 @@ class GitHub extends \IOSocial\Basic
 
 		if (empty($me))
 		{
-		  return null;
+			return null;
 		}
 
 		$parts  = explode(' ', $me->name);
 		$nparts = count($parts);
 		if ($nparts < 2)
 		{
-		    $me->first_name = $name;
-		    $me->last_name  = "";
+			$me->first_name = $name;
+			$me->last_name  = "";
 		}
 		else
 		{
-		    $me->first_name = $parts[0];
-		    $me->last_name  = $parts[$nparts - 1];
+			$me->first_name = $parts[0];
+			$me->last_name  = $parts[$nparts - 1];
 		}
 
 		$user = $this->User($me->email, $me->login, $me->first_name, $me->last_name);

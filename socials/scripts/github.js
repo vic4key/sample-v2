@@ -3,7 +3,8 @@ $("#social-github-signin").click(function(e)
 	OAuth.initialize(OAUTH_PUBLIC_KEY);
 	OAuth.popup("github").done(github =>
 	{
-		request_signin(
+		request_signin
+		(
 			"GitHub",
 			{
 				"token_type": github.token_type,
@@ -12,6 +13,6 @@ $("#social-github-signin").click(function(e)
 		);
 	}).fail(error =>
 	{
-    	console.log(error)
+			console.log(error)
 	});
 });

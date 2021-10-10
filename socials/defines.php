@@ -29,12 +29,12 @@ $GLOBALS["socials"] = array
 		"app_id"				=> "",
 		"app_secret"		=> "",
 	),
-	"Google"	=> array
+	"Google"	=> array # https://console.cloud.google.com/apis/credentials (OAuth 2.0 Client IDs)
 	(
 		"client_id"			=> "",
 		"client_secret"	=> "",
 	),
-	"GitHub"	=> array
+	"GitHub"	=> array # https://github.com/settings/developers (OAuth Apps)
 	(
 		"client_id"			=> "",
 		"client_secret"	=> "",

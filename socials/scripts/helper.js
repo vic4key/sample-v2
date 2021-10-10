@@ -108,18 +108,19 @@ function request_signup()
 	});
 }
 
-function request_signin(social, juser)
+function request_signin(social, user)
 {
 	$.ajax(
 	{
 		url: `${BASE_URL}/users/signin`,
 		type: "POST",
 		dataType: "json",
-		data:
+		contentType : "application/json",
+		data: JSON.stringify(
 		{
 			"social": social,
-			"data": juser,
-		}
+			"data": user,
+		})
 	})
 	.done(function (data, textStatus, jqXHR)
 	{

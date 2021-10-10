@@ -26,6 +26,9 @@ class Google extends \IOSocial\Basic
 			return null;
 		}
 
+		# curl https://www.googleapis.com/oauth2/v3/userinfo -H "Authorization: <token_type> <access_token>"
+		# curl https://www.googleapis.com/oauth2/v3/userinfo -H "Authorization: Bearer ..."
+
 		$me = cURL(
 			"GET",
 			"https://www.googleapis.com/oauth2/v3/userinfo",
@@ -39,7 +42,7 @@ class Google extends \IOSocial\Basic
 		  return null;
 		}
 
-		$user = $this->User($me->email, $me->user, $me->given_name, $me->family_name);
+		$user = $this->User($me->email, $me->sub, $me->given_name, $me->family_name);
 
 		return a2j($user);
 	}
