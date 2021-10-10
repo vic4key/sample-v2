@@ -80,7 +80,17 @@ definitions:
     properties:
       id:
         type: integer
-      name:
+      social:
+        type: string
+      user:
+        type: string
+      pass:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
         type: string
       age:
         type: integer
