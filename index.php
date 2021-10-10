@@ -23,7 +23,12 @@ Flight::before("start", function(&$params, &$output)
 	Flight::protectUrl(Flight::request()->url, "IsUrlProtected");
 });
 
-Flight::route("/", function()
+Flight::route("/(index.php|index.html)?", function()
+{
+	Flight::render("index.html.php", $GLOBALS);
+});
+
+Flight::route("/home", function()
 {
 	Flight::renderPage("home.content.php");
 });
