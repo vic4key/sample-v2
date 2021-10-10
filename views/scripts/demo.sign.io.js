@@ -44,7 +44,11 @@ jQuery(document).ready(function($)
 			async: false,
 		});
 
-		var signedin = response.status == 200 && response.responseJSON.hasOwnProperty("name");
+		var user = undefined;
+		if (response.status == 200)
+		{
+			user = response.responseJSON?.data?.user;
+		}
 
 		switch (tabid)
 		{
@@ -52,12 +56,12 @@ jQuery(document).ready(function($)
 				{
 					$("#frm_signin")
 					.find("input")
-					.attr("disabled", signedin);
+					.attr("disabled", user);
 
 					$("#frm_signin")
 					.find("button[type=submit]")
-					.attr("disabled", signedin)
-					.text(signedin ? "Signed In as [" + response.responseJSON.name + "]" : "Sign In");
+					.attr("disabled", user)
+					.text(user ? `Signed In as [${user}]` : "Sign In");
 				}
 				break;
 
@@ -65,8 +69,8 @@ jQuery(document).ready(function($)
 				{
 					$("#frm_signout")
 					.find("button[type=submit]")
-					.attr("disabled", !signedin)
-					.text("Sign Out" + (!signedin ? "" : " [" + response.responseJSON.name + "]"));
+					.attr("disabled", !user)
+					.text("Sign Out" + (user ? ` [${user}]` : ""));
 				}
 				break;
 
@@ -106,18 +110,23 @@ jQuery(document).ready(function($)
 		e.preventDefault();
 		$.ajax(
 		{
-			url: BASE_URL + "/users/signin",
+			url: `${BASE_URL}/users/signin`,
 			type: "POST",
 			dataType: "json",
-			data: {
-				"name": $(this).find("input[name=user_name]").val(),
-				"pass": $(this).find("input[name=user_pass]").val(),
-			}
+			contentType : "application/json",
+			data: JSON.stringify({
+				"data": {
+					"user": $(this).find("input[name=frm_signin_user]").val(),
+					"pass": $(this).find("input[name=frm_signin_pass]").val(),
+				}
+			})
 		})
 		.done(function(data, textStatus, jqXHR)
 		{
 			fnMessage("#msg_signin", data.hasOwnProperty("user") ? eType.SUCCESS : eType.FAILURE, data.message);
 			fnTabHandler($("#md_signio * li.active a").attr("href"));
+			$("#button-reload").click();
+			$("#btn-chart > #btn-default").click();
 		})
 		.fail(function(jqXHR, textStatus, errorThrown)
 		{
@@ -134,13 +143,14 @@ jQuery(document).ready(function($)
 		e.preventDefault();
 		$.ajax(
 		{
-			url: BASE_URL + "/users/signout",
-			type: "DELETE",
+			url: `${BASE_URL}/users/signout`,
+			type: "POST",
 		})
 		.done(function(data, textStatus, jqXHR)
 		{
 			fnMessage("#msg_signout", eType.SUCCESS, data.message);
 			fnTabHandler($("#md_signio * li.active a").attr("href"));
+			window.location.reload();
 		})
 		.fail(function(jqXHR, textStatus, errorThrown)
 		{

@@ -7,10 +7,11 @@ namespace IOSocial;
  */
 class User
 {
-	public $type		= "";
-	public $email		= "";
+	public $type				= "";
+	public $email				= "";
+	public $user				= "";
 	public $first_name	= "";
-	public $last_name	= "";
+	public $last_name		= "";
 }
 
 /**
@@ -64,12 +65,13 @@ class Social implements \IOSocial\ISocial
 		$this->m_name = $name;
 	}
 
-	public function User($first_name, $last_name, $email)
+	public function User($email, $user_name, $first_name, $last_name)
 	{
 		$user = new User;
 
 		$user->type       = "{$this->m_name} User";
 		$user->email      = $email;
+		$user->user       = $user_name;
 		$user->first_name = $first_name;
 		$user->last_name  = $last_name;
 

@@ -22,27 +22,30 @@ namespace IOSocial;
 
 $GLOBALS["socials"] = array
 (
-	"Facebook"	=> array
+	"Facebook" => array
 	(
-		"app_id"		=> "",
-		"app_secret"	=> "",
+		"app_id"				=> "",
+		"app_secret"		=> "",
 	),
 	"Google"	=> array
 	(
-		"client_id"		=> "",
+		"client_id"			=> "",
 		"client_secret"	=> "",
 	),
 	"GitHub"	=> array
 	(
-		"client_id"		=> "",
+		"client_id"			=> "",
 		"client_secret"	=> "",
 	),
 	"OAuth"		=> array
 	(
-		"public_key"	=> "",
-		"secret_key"	=> "",
+		"public_key"		=> "",
+		"secret_key"		=> "",
 	),
-	"Basic"	=> array(),
+	"Basic"		=> array
+	(
+		# no fields
+	),
 );
 
 ?>

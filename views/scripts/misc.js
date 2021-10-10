@@ -1,9 +1,3 @@
-function sleep(ms)
-{
-	var time = new Date().getTime();
-	while(new Date().getTime() < time + ms) {}
-}
-
 function incl_style(file)
 {
 	var obj = document.createElement("link");
@@ -19,4 +13,10 @@ function incl_script(file)
 	obj.type = "text/javascript";
 	obj.src  = file;
 	document.body.append(obj);
+}
+
+function sleep(ms)
+{
+	var time = new Date().getTime();
+	while (new Date().getTime() < time + ms) {}
 }

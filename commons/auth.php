@@ -105,13 +105,14 @@ function Authorize($data)
 
 	$iat = time();
 
-	$payload = array(
-		"sub"	=> $GLOBALS["title"],
-		"name"	=> $GLOBALS["author"],
-		"iss"	=> $GLOBALS["server"]["base"],
-		"exp"	=> $iat + $GLOBALS["server"]["cage"],
-		"iat"	=> $iat,
-		"data"	=> $data,
+	$payload = array
+	(
+		"sub"  => $GLOBALS["title"],
+		"name" => $GLOBALS["author"],
+		"iss"  => $GLOBALS["server"]["base"],
+		"exp"  => $iat + $GLOBALS["server"]["cage"],
+		"iat"	 => $iat,
+		"data" => $data,
 	);
 
 	$encoded = \Firebase\JWT\JWT::encode($payload, $pri, "RS256");

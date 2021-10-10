@@ -6,25 +6,14 @@
 	LazyLoadScript("libraries/Swagger-UI-3.23.8/swagger-ui-bundle.js");
 	LazyLoadScript("libraries/Swagger-UI-3.23.8/swagger-ui-standalone-preset.js");
 
+	LazyLoadScript("views/scripts/demo.sign.io.js");
 	LazyLoadScript("views/scripts/demo.swagger.js");
 ?>
 
 <div class="row padding-bottom padding-top">
 	<div class="col-sm-12">
 		<h1><center>DEMO</center></h1>
-
-		<?php include_once("socials/htmls/signing.ui.php"); ?>
-
-		<center>
-			<button
-				type="button"
-				id="btn_signio"
-				class="btn btn-default"
-				data-toggle="modal"
-				data-target="#md_signio">
-				Sign In / Sign Out
-			</button>
-		</center>
+		<?php include_once("shared.signio.dialog.php"); ?>
 	</div>
 </div>
 

@@ -1,0 +1,10 @@
+
+# request time series
+GET https://{{CF_API_ENDPOINT}}/{{CF_API_VERSION}}/zones/{{CF_API_ZONE}}/settings
+? since=2020-12-01T00:00:00Z
+& until=2020-12-18T23:59:59Z
+& continuous=true
+X-Auth-Email: {{CF_API_EMAIL}}
+X-Auth-Key: {{CF_API_KEY}}
+Authorization: {{CF_API_AUTH}}
+Content-Type: application/json

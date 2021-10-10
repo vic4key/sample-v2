@@ -3,7 +3,6 @@
 namespace IOSocial;
 
 require_once "basic.php";
-require_once "curl.php";
 
 class Facebook extends \IOSocial\Basic
 {
@@ -38,7 +37,7 @@ class Facebook extends \IOSocial\Basic
 		  return null;
 		}
 
-		$user = $this->User($me->first_name, $me->last_name, $me->email);
+		$user = $this->User($me->email, $me->user, $me->first_name, $me->last_name);
 
 		return a2j($user);
 	}

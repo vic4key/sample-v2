@@ -3,7 +3,6 @@
 namespace IOSocial;
 
 require_once "basic.php";
-require_once "curl.php";
 
 class Google extends \IOSocial\Basic
 {
@@ -40,7 +39,7 @@ class Google extends \IOSocial\Basic
 		  return null;
 		}
 
-		$user = $this->User($me->given_name, $me->family_name, $me->email);
+		$user = $this->User($me->email, $me->user, $me->given_name, $me->family_name);
 
 		return a2j($user);
 	}

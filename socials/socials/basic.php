@@ -3,6 +3,7 @@
 namespace IOSocial;
 
 require_once "social.php";
+require_once "commons/curl.php";
 require_once "models/demo.user.php";
 
 class Basic extends \IOSocial\Social
@@ -31,11 +32,11 @@ class Basic extends \IOSocial\Social
 			return null;
 		}
 
-		$validid = is_numeric($id);
+		$valid_user_id = is_numeric($id);
 
-		$sql  = \Models\User::sql();
+		$sql  = \Models\User::serialize();
 		$sql  = "SELECT {$sql} FROM `tbl_user`";
-		$sql .= $validid ? " WHERE `id` = $id" : "";
+		$sql .= $valid_user_id ? " WHERE `id` = $id" : "";
 
 		$users = \Flight::db()->query($sql)->fetchAll(\PDO::FETCH_CLASS, "Models\\User");
 		if (count($users) == 0)
@@ -43,7 +44,7 @@ class Basic extends \IOSocial\Social
 			return null;
 		}
 
-		return a2j($validid ? $users[0] : $users);
+		return a2j($valid_user_id ? $users[0] : $users);
 	}
 
 	public function Query($jdata)
@@ -53,16 +54,16 @@ class Basic extends \IOSocial\Social
 			return null;
 		}
 
-		$name = $jdata->name;
-		$pass = $jdata->pass;
+		$user_name = $jdata->user;
+		$user_pass = $jdata->pass;
 
-		if (strlen($name) == 0 or strlen($pass) == 0)
+		if (strlen($user_name) == 0 or strlen($user_pass) == 0)
 		{
 			return null;
 		}
 
-		$sql = \Models\User::sql();
-		$sql = "SELECT {$sql} FROM `tbl_user` WHERE `name` = \"$name\" AND `pass` = \"$pass\" LIMIT 1";
+		$sql = \Models\User::serialize();
+		$sql = "SELECT {$sql} FROM `tbl_user` WHERE `user` = \"$user_name\" AND `pass` = \"$user_pass\" LIMIT 1";
 
 		$users = \Flight::db()->query($sql)->fetchAll(\PDO::FETCH_CLASS, "Models\\User");
 
@@ -78,7 +79,7 @@ class Basic extends \IOSocial\Social
 		  return null;
 		}
 
-		$user = $this->User($me->first_name, $me->last_name, $me->email);
+		$user = $this->User($me->email, $me->user, $me->first_name, $me->last_name);
 
 		return a2j($user);
 	}

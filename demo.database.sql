@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `tbl_user` (
   `id` int(10) unsigned NOT NULL,
   `social` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `user` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `social`, `name`, `pass`, `email`, `first_name`, `last_name`, `age`) VALUES
+INSERT INTO `tbl_user` (`id`, `social`, `user`, `pass`, `email`, `first_name`, `last_name`, `age`) VALUES
 (1, '', 'vic', '123', 'vic@sample.email', 'Vic', 'V.', 11),
 (2, '', 'test', '123', 'test@sample.email', 'Test', 'T.', 22),
 (3, '', 'user', '123', 'user@sample.email', 'User', 'U.', 33);

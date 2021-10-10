@@ -1,5 +1,3 @@
 <?php
-	echo "<script type=\"text/javascript\">";
-	echo "const BASE_URL = \"{$server["base"]}\";";
-	echo "</script>";
+	echo "<script type=\"text/javascript\">const BASE_URL = \"{$server["base"]}\";</script>";
 ?>

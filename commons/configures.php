@@ -111,7 +111,7 @@ Flight::map("status", function($code, $details = [])
 Flight::map("renderPage", function($name)
 {
 	$GLOBALS["file_page_content"] = $name;
-    Flight::render("Page.Layout.php", $GLOBALS);
+	Flight::render("page.layout.php", $GLOBALS);
 });
 
 /**
@@ -126,7 +126,7 @@ Flight::map("protectUrl", function($url, $fn)
 		$status = \Auth\Verify();
 		if (!$status->authorized)
 		{
-			Flight::status(401, $status);
+			Flight::status(401, $status); # 'Unauthorized'
 		}
 	}
 });
