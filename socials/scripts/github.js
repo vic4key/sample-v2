@@ -13,6 +13,6 @@ $("#social-github-signin").click(function(e)
 		);
 	}).fail(error =>
 	{
-			console.log(error)
+		console.log(error)
 	});
 });
