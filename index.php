@@ -12,7 +12,7 @@ Flight::route("*", function()
 
 	if ($url != "/" and substr($url, -1) == "/")
 	{
-		Flight::redirect(rtrim($url, "/"), 301);
+		Flight::redirect(rtrim($url, "/"), 301); # 'Moved Permanently'
 	}
 
 	return true;
@@ -20,7 +20,7 @@ Flight::route("*", function()
 
 Flight::before("start", function(&$params, &$output)
 {
-	Flight::protectUrl(Flight::request()->url, "IsUrlProtected");
+	Flight::middle_ware(Flight::request()->url, "is_url_protected");
 });
 
 Flight::route("/(index.php|index.html)?", function()
@@ -30,12 +30,12 @@ Flight::route("/(index.php|index.html)?", function()
 
 Flight::route("/home", function()
 {
-	Flight::renderPage("home.content.php");
+	Flight::render_page("home.content.php");
 });
 
 Flight::route("/demo", function()
 {
-	Flight::renderPage("demo.content.php");
+	Flight::render_page("demo.content.php");
 });
 
 Flight::route("/test", function()

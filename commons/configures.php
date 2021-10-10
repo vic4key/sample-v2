@@ -28,7 +28,7 @@ assert_options(ASSERT_CALLBACK, "fn_assert_callback");
  * @param string $url The url.
  * @return true if the url is protected otherwise return false.
  */
-function IsUrlProtected($url)
+function is_url_protected($url)
 {
 	return strpos($url, "/api/") !== FALSE;
 }
@@ -108,7 +108,7 @@ Flight::map("status", function($code, $details = [])
  * Renders an page.
  * @param	string	$name	The page content file name.
  */
-Flight::map("renderPage", function($name)
+Flight::map("render_page", function($name)
 {
 	$GLOBALS["file_page_content"] = $name;
 	Flight::render("page.layout.php", $GLOBALS);
@@ -119,7 +119,7 @@ Flight::map("renderPage", function($name)
  * @param	string	$url	The url.
  * @param	string	$fn		The function that determines an url is protected or not.
  */
-Flight::map("protectUrl", function($url, $fn)
+Flight::map("middle_ware", function($url, $fn)
 {
 	if ($fn($url))
 	{
