@@ -16,12 +16,8 @@ class ICloudFlare
 
 	public function __construct()
 	{
-		CloudFlare::Instance()->Initialize(
-			$GLOBALS["cf"]["domain"],
-			$GLOBALS["cf"]["email"],
-			$GLOBALS["cf"]["token"],
-			$GLOBALS["cf"]["auth"]
-		);
+		$CF = $GLOBALS["cflare"];
+		CloudFlare::Instance()->Initialize($CF["domain"], $CF["email"], $CF["token"], $CF["auth"]);
 	}
 
 	public static function Instance()
@@ -128,8 +124,6 @@ class ICloudFlare
 		';
 
 		$jdata = CloudFlare::Instance()->GetGQLObject($gql);
-		jassert($jdata);
-
 		if (!$jdata)
 		{
 			return json_encode($result);

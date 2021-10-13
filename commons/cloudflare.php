@@ -55,15 +55,25 @@ class CloudFlare
 	 */
 	public function Initialize($domain, $email, $key, $auth)
 	{
+		if (strlen($domain) == 0 || strlen($email) == 0 || strlen($key) == 0 || strlen($auth) == 0)
+		{
+			return false;
+		}
+
 		$this->m_Headers[] = "X-Auth-Key: ".$key;
 		$this->m_Headers[] = "X-Auth-Email: ".$email;
 		$this->m_Headers[] = "Authorization: ".$auth;
 		$this->m_Headers[] = "Content-Type: application/json";
 
 		$zone = $this->GetZone($domain);
-		jassert($zone);
+		if (!$zone)
+		{
+			return false;
+		}
 
 		$this->m_ZoneID = $zone->id;
+
+		return true;
 	}
 
 	/**
@@ -122,7 +132,10 @@ class CloudFlare
 		$result = "";
 
 		$jdata = $this->GetZones();
-		jassert($jdata);
+		if (!$jdata)
+		{
+			return $result;
+		}
 
 		if (!$jdata->success)
 		{

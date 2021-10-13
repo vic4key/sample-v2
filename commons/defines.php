@@ -32,15 +32,21 @@ $CF_CONFIG = array
   "auth"   => "",
 );
 
+$OT_CONFIG = array
+(
+  "salt"   => "",
+);
+
 $DB_CONFIG = in_array($_SERVER["REMOTE_ADDR"], array("127.0.0.1", "::1")) ? $DB_LOCAL : $DB_SERVER;
 
 $GLOBALS = array_merge($GLOBALS, array
 (
-	"title"		=> "Sample",
-	"author"	=> "Vic P.",
+	"title"  => "Sample",
+	"author" => "Vic P.",
   "year"   => date("Y"),
   "mysql"  => $DB_CONFIG,
-  "cf"     => $CF_CONFIG,
+  "cflare" => $CF_CONFIG,
+  "other"  => $OT_CONFIG,
   "server" => array
   (
     "host" => $HOST_NAME,

@@ -4,6 +4,7 @@ namespace IOSocial;
 
 require_once "social.php";
 require_once "commons/curl.php";
+include_once "commons/defines.php";
 require_once "models/demo.user.php";
 
 class Basic extends \IOSocial\Social
@@ -67,8 +68,11 @@ class Basic extends \IOSocial\Social
 			return null;
 		}
 
+		$salt = $GLOBALS["other"]["salt"];
+		$pass_hash = md5("{$salt}{$user_pass}");
+
 		$sql = \Models\User::serialize();
-		$sql = "SELECT {$sql} FROM `tbl_user` WHERE `user` = \"$user_name\" AND `pass` = \"$user_pass\" LIMIT 1";
+		$sql = "SELECT {$sql} FROM `tbl_user` WHERE `user` = \"$user_name\" AND `pass` = \"$pass_hash\" LIMIT 1";
 
 		$users = \Flight::db()->query($sql)->fetchAll(\PDO::FETCH_CLASS, "Models\\User");
 
