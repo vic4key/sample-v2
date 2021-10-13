@@ -29,7 +29,7 @@ PHP 5.6 or greater
 1. Make sure `Apache` & `MySQL` service is running on your machine
 2. Clone the project to `localhost` directory as the name `sample-v2`
 3. Import the database file at `/sample-v2/database.sql` to your `MySQL`
-4. Define social network integration information at `/sample-v2/socials/defines.php`
+4. Disable/Enable or define social network integration information at `/sample-v2/socials/defines.php`
 5. Okay. Take a look the home page at [localhost/sample-v2](http://localhost/sample-v2), the demo page at [localhost/sample-v2/demo](http://localhost/sample-v2/demo), the user/pass for testing is `test/123` or your social network account
 
 Note:
