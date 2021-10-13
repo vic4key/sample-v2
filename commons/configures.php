@@ -30,7 +30,7 @@ assert_options(ASSERT_CALLBACK, "fn_assert_callback");
  */
 function is_url_protected($url)
 {
-	return strpos($url, "/api/") !== FALSE;
+	return starts_with($url, "/api/", true) != FALSE;
 }
 
 /**
