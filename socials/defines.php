@@ -22,25 +22,27 @@ namespace IOSocial;
 
 $GLOBALS["socials"] = array
 (
-	"enabled" => True,
-
 	"Facebook"	=> array
 	(
+		"enabled" => True,
 		"app_id"				=> "",
 		"app_secret"		=> "",
 	),
 	"Google"	=> array # https://console.cloud.google.com/apis/credentials (OAuth 2.0 Client IDs)
 	(
+		"enabled" => True,
 		"client_id"			=> "",
 		"client_secret"	=> "",
 	),
 	"GitHub"	=> array # https://github.com/settings/developers (OAuth Apps)
 	(
+		"enabled" => True,
 		"client_id"			=> "",
 		"client_secret"	=> "",
 	),
 	"OAuth"		=> array
 	(
+		"enabled" => True,
 		"public_key"		=> "",
 		"secret_key"		=> "",
 	),

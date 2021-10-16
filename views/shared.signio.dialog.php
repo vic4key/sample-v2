@@ -1,10 +1,22 @@
 <?php
+	$socials = $GLOBALS["socials"];
+	$any_social_enabled = False;
+	foreach ($socials as $name => $social)
+	{
+		if (is_array($social) and array_key_exists("enabled", $social))
+		{
+			$any_social_enabled |= $social["enabled"];
+		}
+	}
+?>
+
+<?php
 	LazyLoadScript("socials/scripts/helper.js");
 	LazyLoadScript("socials/scripts/handler.js");
 ?>
 
 <?php
-	if ($GLOBALS["socials"]["enabled"])
+	if ($any_social_enabled)
 	{
 		LazyLoadScript("socials/scripts/facebook.js");
 
@@ -20,7 +32,7 @@
 ?>
 
 <?php
-	if ($GLOBALS["socials"]["enabled"])
+	if ($any_social_enabled)
 	{
 		echo "<script type=\"text/javascript\">";
 		echo "const OAUTH_PUBLIC_KEY = \"{$socials["OAuth"]["public_key"]}\";";
@@ -73,30 +85,36 @@
 
 									<button type="submit" class="btn btn-primary btn-block">Sign In</button>
 
-									<?php if ($GLOBALS["socials"]["enabled"]) { ?>
+									<?php if ($any_social_enabled) { ?>
 									<div id="social-buttons">
 										<div class="social-button">
 											<span>OR</span>
 										</div>
 
+										<?php if ($socials["Facebook"]["enabled"]) { ?>
 										<div class="social-button">
 											<a id="social-facebook-signin" class="btn btn-block btn-social btn-facebook">
 												<span class="fa fa-facebook"></span>Sign in with Facebook
 											</a>
 										</div>
+										<?php } ?>
 
+										<?php if ($socials["Google"]["enabled"]) { ?>
 										<div class="social-button">
 											<meta name="google-signin-client_id" content="<?php echo "{$socials["Google"]["client_id"]}" ?>">
 											<a id="social-google-signin" class="btn btn-block btn-social btn-google">
 												<span class="fa fa-google"></span>Sign in with Google
 											</a>
 										</div>
+										<?php } ?>
 
+										<?php if ($socials["GitHub"]["enabled"]) { ?>
 										<div class="social-button">
 											<a id="social-github-signin" class="btn btn-block btn-social btn-github">
 												<span class="fa fa-github"></span>Sign in with GitHub
 											</a>
 										</div>
+										<?php } ?>
 									</div>
 									<?php } ?>
 								</form>
