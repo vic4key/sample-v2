@@ -25,7 +25,7 @@ class Others
       $time = \CF_UV_MONTH;
     }
 
-    $result = \ICloudFlare::Instance()->QueryTimeSeries($time);
+    $result = \ICloudFlare::Instance()->query_time_series($time);
     return \Flight::json($result);
   }
 }

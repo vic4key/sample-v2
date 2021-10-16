@@ -17,33 +17,33 @@ require_once("configures.php");
  */
 class CloudFlare
 {
-	private static $m_Instance = null;
+	private static $m_instance = null;
 
-	private $m_Host = "";
-	private $m_Endpoint = "";
-	private $m_Domain = "";
-	private $m_ZoneID = "";
-	private $m_Headers  = [];
+	private $m_host = "";
+	private $m_endpoint = "";
+	private $m_domain = "";
+	private $m_zone_id = "";
+	private $m_headers = [];
 
-	public function ZoneID()
+	public function zone_id()
 	{
-		return $this->m_ZoneID;
+		return $this->m_zone_id;
 	}
 
 	public function __construct()
 	{
-		$this->m_Host = "api.cloudflare.com";
-		$this->m_Endpoint = sprintf("https://%s/client/v4/", $this->m_Host);
+		$this->m_host = "api.cloudflare.com";
+		$this->m_endpoint = sprintf("https://%s/client/v4/", $this->m_host);
 	}
 
 	public static function Instance()
 	{
-		if (!isset(self::$m_Instance))
+		if (!isset(self::$m_instance))
 		{
-			self::$m_Instance = new CloudFlare();
+			self::$m_instance = new CloudFlare();
 		}
 
-		return self::$m_Instance;
+		return self::$m_instance;
 	}
 
 	/**
@@ -53,25 +53,25 @@ class CloudFlare
 	 * @param	string	$key		The token.
 	 * @param	string	$auth		The authentication.
 	 */
-	public function Initialize($domain, $email, $key, $auth)
+	public function initialize($domain, $email, $key, $auth)
 	{
 		if (strlen($domain) == 0 || strlen($email) == 0 || strlen($key) == 0)
 		{
 			return false;
 		}
 
-		$this->m_Headers[] = "X-Auth-Key: ".$key;
-		$this->m_Headers[] = "X-Auth-Email: ".$email;
-		$this->m_Headers[] = "Authorization: ".$auth;
-		$this->m_Headers[] = "Content-Type: application/json";
+		$this->m_headers[] = "X-Auth-Key: ".$key;
+		$this->m_headers[] = "X-Auth-Email: ".$email;
+		$this->m_headers[] = "Authorization: ".$auth;
+		$this->m_headers[] = "Content-Type: application/json";
 
-		$zone = $this->GetZone($domain);
+		$zone = $this->get_zone($domain);
 		if (!$zone)
 		{
 			return false;
 		}
 
-		$this->m_ZoneID = $zone->id;
+		$this->m_zone_id = $zone->id;
 
 		return true;
 	}
@@ -84,7 +84,7 @@ class CloudFlare
 	 * @param	number	$timeout	The time-out.
 	 * @return json		The response data.
 	 */
-	public function Request($method, $uri, $fnopt = null, $timeout = 5)
+	public function request($method, $uri, $fnopt = null, $timeout = 5)
 	{
 		# https://incarnate.github.io/curl-to-php/
 
@@ -97,7 +97,7 @@ class CloudFlare
 		curl_setopt($curl, CURLOPT_URL, $uri);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->m_Headers);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->m_headers);
 
 		if ($fnopt && is_callable($fnopt))
 		{
@@ -117,9 +117,9 @@ class CloudFlare
 	 * Gets all zones (the added sites).
 	 * @return json	The zones data.
 	 */
-	public function GetZones()
+	public function get_zones()
 	{
-		return $this->Request("GET", $this->m_Endpoint."zones");
+		return $this->request("GET", $this->m_endpoint."zones");
 	}
 
 	/**
@@ -127,11 +127,11 @@ class CloudFlare
 	 * @param	string	$domain The added domain.
 	 * @return json		The zone data.
 	 */
-	public function GetZone($domain)
+	public function get_zone($domain)
 	{
 		$result = "";
 
-		$jdata = $this->GetZones();
+		$jdata = $this->get_zones();
 		if (!$jdata)
 		{
 			return $result;
@@ -160,15 +160,15 @@ class CloudFlare
 	 * @param	array		$args		The time-out.
 	 * @return json		The object data.
 	 */
-	public function GetObject($path, $args)
+	public function get_object($path, $args)
 	{
-		if (strlen($this->m_ZoneID) == 0)
+		if (strlen($this->m_zone_id) == 0)
 		{
 			return a2j(array());
 		}
 
-		$uri  = $this->m_Endpoint;
-		$uri .= sprintf("zones/%s/%s", $this->m_ZoneID, $path);
+		$uri  = $this->m_endpoint;
+		$uri .= sprintf("zones/%s/%s", $this->m_zone_id, $path);
 
 		if (!empty($args))
 		{
@@ -176,20 +176,20 @@ class CloudFlare
 			$uri .= http_build_query($args);
 		}
 
-		return $this->Request("GET", $uri);
+		return $this->request("GET", $uri);
 	}
 
-	public function GetGQLObject($args)
+	public function get_graphql_object($args)
 	{
-		if (strlen($this->m_ZoneID) == 0)
+		if (strlen($this->m_zone_id) == 0)
 		{
 			return a2j(array());
 		}
 
-		$uri  = $this->m_Endpoint;
+		$uri  = $this->m_endpoint;
 		$uri .= "graphql";
 
-		$result = $this->Request("POST", $uri, function(&$curl) use($args)
+		$result = $this->request("POST", $uri, function(&$curl) use($args)
 		{
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $args);
 		});

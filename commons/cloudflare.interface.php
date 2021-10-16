@@ -12,25 +12,25 @@ const CF_UV_MONTH = 30 * CF_UV_DAY;
  */
 class ICloudFlare
 {
-	private static $m_Instance = null;
+	private static $m_instance = null;
 
 	public function __construct()
 	{
 		$CF = $GLOBALS["cflare"];
-		CloudFlare::Instance()->Initialize($CF["domain"], $CF["email"], $CF["token"], $CF["auth"]);
+		CloudFlare::Instance()->initialize($CF["domain"], $CF["email"], $CF["token"], $CF["auth"]);
 	}
 
 	public static function Instance()
 	{
-		if (!isset(self::$m_Instance))
+		if (!isset(self::$m_instance))
 		{
-			self::$m_Instance = new ICloudFlare();
+			self::$m_instance = new ICloudFlare();
 		}
 
-		return self::$m_Instance;
+		return self::$m_instance;
 	}
 
-	private function GetDateRange($time, &$since, &$until)
+	private function get_date_range($time, &$since, &$until)
 	{
 		$DT_until = new DateTime("NOW");
 		// $DT_until->modify("-1 day");
@@ -70,7 +70,7 @@ class ICloudFlare
 	 * @param	string	$time	The time to query.
 	 * @return json		The analytics.
 	 */
-	public function QueryAnalytics($time)
+	public function query_analytics($time)
 	{
 		$result = array();
 
@@ -107,9 +107,9 @@ class ICloudFlare
 
 		$since = "";
 		$until = "";
-		$this->GetDateRange($time, $since, $until);
+		$this->get_date_range($time, $since, $until);
 
-		$zoneid = CloudFlare::Instance()->ZoneID();
+		$zoneid = CloudFlare::Instance()->zone_id();
 
 		$gql = '
 		{
@@ -123,7 +123,7 @@ class ICloudFlare
 		}
 		';
 
-		$jdata = CloudFlare::Instance()->GetGQLObject($gql);
+		$jdata = CloudFlare::Instance()->get_graphql_object($gql);
 		if (!$jdata)
 		{
 			return json_encode($result);
@@ -140,11 +140,11 @@ class ICloudFlare
 	 * @param	string	$time	The time to query.
 	 * @return json		The total/min/max visitors.
 	 */
-	public function QueryVisitors($time)
+	public function query_visitors($time)
 	{
 		$result = array();
 
-		$jdata = $this->QueryAnalytics($time);
+		$jdata = $this->query_analytics($time);
 		if (!$jdata)
 		{
 			return json_encode($result);
@@ -183,11 +183,11 @@ class ICloudFlare
 	 * @param	string	$time	The time to query.
 	 * @return json		The time series.
 	 */
-	public function QueryTimeSeries($time)
+	public function query_time_series($time)
 	{
 		$result = array();
 
-		$jdata = $this->QueryAnalytics($time);
+		$jdata = $this->query_analytics($time);
 		if (!$jdata)
 		{
 			return json_encode($result);
