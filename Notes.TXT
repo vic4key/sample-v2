@@ -1,4 +1,0 @@
-1. Logout socials.
-2. Fill width social buttons size. Done.
-3. Google meta tab.
-4. Change FB button to non-default. Done.
