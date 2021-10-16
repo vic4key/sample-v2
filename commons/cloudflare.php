@@ -55,7 +55,7 @@ class CloudFlare
 	 */
 	public function Initialize($domain, $email, $key, $auth)
 	{
-		if (strlen($domain) == 0 || strlen($email) == 0 || strlen($key) == 0 || strlen($auth) == 0)
+		if (strlen($domain) == 0 || strlen($email) == 0 || strlen($key) == 0)
 		{
 			return false;
 		}
